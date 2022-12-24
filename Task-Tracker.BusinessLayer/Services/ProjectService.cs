@@ -53,7 +53,7 @@ public class ProjectService : IProjectService
         return _mapper.Map<List<TaskModel>>(tasks);
     }
 
-    public async Task UpdateProject(ProjectModel newModel, int id)
+    public async Task UpdateProject(ProjectModel newModel, int id, CurrentStatusProject currentStatus)
     {
         var project = await _projectRepository.GetProjectById(id);
         _checkerService.CheckIfProjectEmpty(project, id);
@@ -63,6 +63,7 @@ public class ProjectService : IProjectService
         project.CompletionDate = newModel.CompletionDate;
         project.CurrentStatus = newModel.CurrentStatus;
         project.Priority = newModel.Priority;
+        project.CurrentStatus = currentStatus;
 
         await _projectRepository.UpdateProject(_mapper.Map<ProjectEntity>(project));
        

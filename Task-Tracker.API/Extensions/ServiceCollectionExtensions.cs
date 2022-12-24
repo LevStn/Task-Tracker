@@ -36,10 +36,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddFluentValidationAutoValidation(config => config.DisableDataAnnotationsValidation = true);
         services.AddScoped<IValidator<CustomFildRequest>, CustomFildRequestValidator>();
-        services.AddScoped<IValidator<ProjectCreateRequest>, ProjectCreateRequestValidator>();
-        services.AddScoped<IValidator<ProjectUpdateRequest>, ProjectUpdateRequestValidator>();
-        services.AddScoped<IValidator<TaskCreateRequest>, TaskCreateRequestValidator>();
-        services.AddScoped<IValidator<TaskUpdateRequest>, TaskUpdateRequestValidator>();
+        services.AddScoped<IValidator<ProjectRequest>, ProjectRequestValidator>();
+        services.AddScoped<IValidator<TaskCreatingRequest>, TaskRequestValidator>();
     }
 
     public static void AddSwaggerGen(this IServiceCollection services)

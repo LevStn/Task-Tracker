@@ -45,7 +45,7 @@ public class TaskService : ITaskService
         return _mapper.Map<TaskModel>(task);
     }
 
-    public async Task UpdateTask(TaskModel newModel, long id)
+    public async Task UpdateTask(TaskModel newModel, long id, CurrentStatusTask currentStatusTask)
     {
         var task = await _taskRepository.GetTaskById(id);
         _checkerService.CheckIfTaskEmpty(task, id);
@@ -54,6 +54,7 @@ public class TaskService : ITaskService
         task.CurrentStatus = newModel.CurrentStatus;
         task.Priority = newModel.Priority;
         task.Discription = newModel.Discription;
+        task.CurrentStatus = currentStatusTask;
 
         await _taskRepository.UpdateTask(task);
     }

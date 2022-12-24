@@ -184,7 +184,7 @@ public class ProjectServicePositive
         _projectRepositoryMock.Setup(p => p.GetProjectById(project.Id))
            .ReturnsAsync(project);
 
-        await _sut.UpdateProject(newProjectProperties, project.Id);
+        await _sut.UpdateProject(newProjectProperties, project.Id, CurrentStatusProject.Active);
 
         var actual = await _sut.GetProjectById(project.Id);
 

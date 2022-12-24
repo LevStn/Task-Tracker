@@ -29,7 +29,7 @@ public class ProjectController : ControllerBase
     [SwaggerOperation(Summary = "Create new project")]
     [ProducesResponseType(typeof(long), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-    public async Task<ActionResult<int>> AddProject([FromBody] ProjectCreateRequest project)
+    public async Task<ActionResult<int>> AddProject([FromBody] ProjectRequest project)
     {
         var id = await _projectService.AddProject(_mapper.Map<ProjectModel>(project));
         return Created($"{this.GetRequestPath()}/{id}", id);
@@ -68,9 +68,9 @@ public class ProjectController : ControllerBase
     [SwaggerOperation(Summary = "Changing project")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> UpdateProjectById([FromBody] ProjectUpdateRequest updateModel, [FromRoute] int id)
+    public async Task<ActionResult> UpdateProjectById([FromBody] ProjectRequest updateModel, [FromRoute] int id, [FromQuery] CurrentStatusProject currentStatus)
     {
-        await _projectService.UpdateProject(_mapper.Map<ProjectModel>(updateModel), id);
+        await _projectService.UpdateProject(_mapper.Map<ProjectModel>(updateModel), id, currentStatus);
         return NoContent();
     }
 

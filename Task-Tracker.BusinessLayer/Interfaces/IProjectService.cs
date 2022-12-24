@@ -10,6 +10,6 @@ public interface IProjectService
     public Task<ProjectModel> GetProjectById(int id);
     public Task<List<ProjectModel>> GetProjects();
     public Task<List<TaskModel>> GetTasksByProjectId(int id);
-    public Task UpdateProject(ProjectModel newModel, int id);
+    public Task UpdateProject(ProjectModel newModel, int id, CurrentStatusProject currentStatus);
     public Task<List<ProjectModel>> SortingProjectByParameters(TypeOFSorting typeOFSorting);
 }

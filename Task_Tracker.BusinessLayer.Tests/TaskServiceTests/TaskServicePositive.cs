@@ -88,7 +88,7 @@ public class TaskServicePositive
     }
 
     [Test]
-    public async Task UpdateProject_ValidRequestPassed_ChangesProperties()
+    public async Task UpdateTask_ValidRequestPassed_ChangesProperties()
     {
         var task = new TaskEntity()
         {
@@ -96,7 +96,7 @@ public class TaskServicePositive
             Name = "First",
             Priority = 1,
             Discription = "Test",
-            CurrentStatus = CurrentStatusTask.ToDo
+            CurrentStatus = CurrentStatusTask.Done
 
         };
 
@@ -105,19 +105,19 @@ public class TaskServicePositive
             Name = "Second",
             Priority = 10,
             Discription="newTest",
-            CurrentStatus = CurrentStatusTask.ToDo,
+
         };
 
         _taskRepositoryMock.Setup(p => p.GetTaskById(task.Id))
            .ReturnsAsync(task);
 
-        await _sut.UpdateTask(newTaskProperties, task.Id);
+        await _sut.UpdateTask(newTaskProperties, task.Id, CurrentStatusTask.InProgress);
 
         var actual = await _sut.GetTaskById(task.Id);
 
         Assert.That(actual.Name, Is.EqualTo(newTaskProperties.Name));
         Assert.That(actual.Priority, Is.EqualTo(newTaskProperties.Priority));
         Assert.That(actual.Discription, Is.EqualTo(newTaskProperties.Discription));
-        Assert.That(actual.CurrentStatus, Is.EqualTo(newTaskProperties.CurrentStatus));
+        Assert.That(actual.CurrentStatus, Is.EqualTo(CurrentStatusTask.InProgress));
     }
 }

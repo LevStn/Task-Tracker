@@ -4,9 +4,9 @@ using Task_Tracker.API.Models.Requests;
 
 namespace Task_Tracker.API.Validators;
 
-public class TaskCreateRequestValidator : AbstractValidator<TaskCreateRequest>
+public class TaskRequestValidator : AbstractValidator<TaskCreatingRequest>
 {
-    public TaskCreateRequestValidator()
+    public TaskRequestValidator()
     {
         RuleFor(t => t.Name)
             .NotEmpty().WithMessage(ApiErrorMessage.NameIsNotRequired);

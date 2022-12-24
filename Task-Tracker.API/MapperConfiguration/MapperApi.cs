@@ -9,10 +9,9 @@ public class MapperApi : Profile
 {
     public MapperApi()
     {
-        CreateMap<ProjectCreateRequest, ProjectModel>();
-        CreateMap<ProjectUpdateRequest, ProjectModel>();
-        CreateMap<TaskCreateRequest, TaskModel>();
-        CreateMap<TaskUpdateRequest, TaskModel>();
+        CreateMap<ProjectRequest, ProjectModel>();
+        CreateMap<TaskCreatingRequest, TaskModel>();
+        CreateMap<TaskUpdatingRequest, TaskModel>();
         CreateMap<ProjectModel, ProjectResponse>();
         CreateMap<TaskModel, TaskResponse>()
             .ForMember(t => t.CustomFilds, dest => dest.MapFrom(p => p.CustomFildModels));

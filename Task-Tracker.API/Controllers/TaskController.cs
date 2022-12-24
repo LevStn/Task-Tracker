@@ -6,6 +6,7 @@ using Task_Tracker.API.Models.Requests;
 using Task_Tracker.API.Models.Responses;
 using Task_Tracker.BusinessLayer.Models;
 using Task_Tracker.BusinessLayer.Services;
+using Task_Tracker.DataLayer.Enums;
 
 namespace Task_Tracker.API.Controllers;
 
@@ -29,7 +30,7 @@ public class TaskController : ControllerBase
     [SwaggerOperation(Summary = "Create new task")]
     [ProducesResponseType(typeof(long), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(void), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<ActionResult<long>> AddTask([FromBody] TaskCreateRequest createRequest)
+    public async Task<ActionResult<long>> AddTask([FromBody] TaskCreatingRequest createRequest)
     {
         var id = await _taskService.AddTask(_mapper.Map<TaskModel>(createRequest));
         return Created($"{this.GetRequestPath()}/{id}", id);
@@ -47,9 +48,9 @@ public class TaskController : ControllerBase
     [HttpPut("{id}")]
     [SwaggerOperation(Summary = "Update task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<ActionResult> UpdateTaskById([FromBody] TaskUpdateRequest updateRequest, [FromRoute] int id)
+    public async Task<ActionResult> UpdateTaskById([FromBody] TaskUpdatingRequest updateRequest, [FromRoute] int id, [FromQuery] CurrentStatusTask currentStatus)
     {
-        await _taskService.UpdateTask(_mapper.Map<TaskModel>(updateRequest), id);
+        await _taskService.UpdateTask(_mapper.Map<TaskModel>(updateRequest), id, currentStatus);
         return NoContent();
     }
 

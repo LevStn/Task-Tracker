@@ -6,6 +6,7 @@ using Task_Tracker.BusinessLayer.MapperConfig;
 using Task_Tracker.BusinessLayer.Models;
 using Task_Tracker.BusinessLayer.Service;
 using Task_Tracker.BusinessLayer.Services;
+using Task_Tracker.DataLayer.Enums;
 using Task_Tracker.DataLayer.Repositories;
 
 namespace Task_Tracker.BusinessLayer.Tests.ProjectServiceTests;
@@ -75,6 +76,6 @@ public class ProjectServicePositiveNegative
             Name = "Test",
         };
 
-        Assert.ThrowsAsync<EntityNotFoundException>(() => _sut.UpdateProject(project, project.Id));
+        Assert.ThrowsAsync<EntityNotFoundException>(() => _sut.UpdateProject(project, project.Id, CurrentStatusProject.Active));
     }
 }

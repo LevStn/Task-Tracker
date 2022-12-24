@@ -1,10 +1,9 @@
 ﻿namespace Task_Tracker.API.Models.Requests;
 
-public class ProjectCreateRequest
+public class TaskCreatingRequest
 {
     public string Name { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime CompletionDate{ get; set; }
+    public string Discription { get; set; }
     public int Priority { get; set; }
-
+    public int ProjectId { get; set; }
 }

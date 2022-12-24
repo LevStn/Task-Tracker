@@ -14,7 +14,5 @@ public class MapperConfigBusinessLayer : Profile
            .ForMember(t=>t.CustomFildModels,dest => dest.MapFrom(p=>p.CustomFilds))
            .ReverseMap();
         CreateMap<CustomFildEntity, CustomFildModel>().ReverseMap();
-            //.ForMember(t => t.TaskId, dest => dest.MapFrom(p => p.Task.Id)).ReverseMap();
-
     }
 }
