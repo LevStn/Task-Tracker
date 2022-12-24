@@ -1,4 +1,4 @@
-﻿using Task_Tracker.API.Enums;
+﻿using Task_Tracker.DataLayer.Enums;
 
 namespace Task_Tracker.API.Models.Requests;
 

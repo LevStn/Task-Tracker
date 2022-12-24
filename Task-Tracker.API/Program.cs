@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using Task_Tracker.API.Extensions;
 using Task_Tracker.API.MapperConfiguration;
 using Task_Tracker.BusinessLayer.MapperConfig;
@@ -9,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    })
     .ConfigureApiBehaviorOptions(options =>
     {
         options.InvalidModelStateResponseFactory = context =>
@@ -25,13 +30,14 @@ builder.Services.AddAutoMapper(typeof(MapperApi), typeof(MapperConfigBusinessLay
 builder.Services.AddServices();
 builder.Services.AddRepositories();
 builder.Services.AddSwaggerGen();
+builder.Services.AddFluentValidation();
 
 builder.Services.AddDbContext<TaskTrackerContext>(t =>
 {
     t.UseSqlServer(@"Server=.;Database=Task-Tracking;Trusted_Connection=True;TrustServerCertificate=true");
 });
 var app = builder.Build();
-
+app.UseCustomExceptionHandler();
 
 
 if (app.Environment.IsDevelopment())

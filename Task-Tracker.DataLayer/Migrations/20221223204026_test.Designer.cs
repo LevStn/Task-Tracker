@@ -12,7 +12,7 @@ using Task_Tracker.DataLayer;
 namespace TaskTracker.DataLayer.Migrations
 {
     [DbContext(typeof(TaskTrackerContext))]
-    [Migration("20221222221527_test")]
+    [Migration("20221223204026_test")]
     partial class test
     {
         /// <inheritdoc />
@@ -24,6 +24,36 @@ namespace TaskTracker.DataLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Task_Tracker.DataLayer.Entities.CustomFildEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Meaning")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<long>("TaskId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("CustomFild", (string)null);
+                });
 
             modelBuilder.Entity("Task_Tracker.DataLayer.Entities.ProjectEntity", b =>
                 {
@@ -39,12 +69,13 @@ namespace TaskTracker.DataLayer.Migrations
                     b.Property<int>("CurrentStatus")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsDelited")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
@@ -68,7 +99,7 @@ namespace TaskTracker.DataLayer.Migrations
                     b.Property<int>("CurrentStatus")
                         .HasColumnType("int");
 
-                    b.Property<string>("Discriptions")
+                    b.Property<string>("Discription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -77,7 +108,8 @@ namespace TaskTracker.DataLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
@@ -92,10 +124,21 @@ namespace TaskTracker.DataLayer.Migrations
                     b.ToTable("Task", (string)null);
                 });
 
+            modelBuilder.Entity("Task_Tracker.DataLayer.Entities.CustomFildEntity", b =>
+                {
+                    b.HasOne("Task_Tracker.DataLayer.Entities.TaskEntity", "Task")
+                        .WithMany("CustomFilds")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("Task_Tracker.DataLayer.Entities.TaskEntity", b =>
                 {
                     b.HasOne("Task_Tracker.DataLayer.Entities.ProjectEntity", "Project")
-                        .WithMany("Tasks")
+                        .WithMany("Task")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -105,7 +148,12 @@ namespace TaskTracker.DataLayer.Migrations
 
             modelBuilder.Entity("Task_Tracker.DataLayer.Entities.ProjectEntity", b =>
                 {
-                    b.Navigation("Tasks");
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("Task_Tracker.DataLayer.Entities.TaskEntity", b =>
+                {
+                    b.Navigation("CustomFilds");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,6 +14,9 @@ public class MapperApi : Profile
         CreateMap<TaskCreateRequest, TaskModel>();
         CreateMap<TaskUpdateRequest, TaskModel>();
         CreateMap<ProjectModel, ProjectResponse>();
-        CreateMap<TaskModel, TaskResponse>();
+        CreateMap<TaskModel, TaskResponse>()
+            .ForMember(t => t.CustomFilds, dest => dest.MapFrom(p => p.CustomFildModels));
+        CreateMap<CustomFildRequest, CustomFildModel>();
+        CreateMap<CustomFildModel, CustomFildResponse>();
     }
 }

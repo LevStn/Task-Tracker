@@ -9,8 +9,12 @@ public class MapperConfigBusinessLayer : Profile
     public MapperConfigBusinessLayer()
     {
         CreateMap<ProjectEntity, ProjectModel>().ReverseMap();
-            //.ForMember(t => t.CurrentStatus, act => act.MapFrom(l => l.Item1.Id));
+        CreateMap<TaskEntity, TaskModel>()
+           .ForMember(t => t.ProjectId, dest => dest.MapFrom(p => p.Project.Id))
+           .ForMember(t=>t.CustomFildModels,dest => dest.MapFrom(p=>p.CustomFilds))
+           .ReverseMap();
+        CreateMap<CustomFildEntity, CustomFildModel>().ReverseMap();
+            //.ForMember(t => t.TaskId, dest => dest.MapFrom(p => p.Task.Id)).ReverseMap();
 
-        CreateMap<TaskEntity, TaskModel>().ReverseMap();
     }
 }
