@@ -21,17 +21,16 @@ public class ProjectRepository : IProjectRepository
     }
 
     public async Task<ProjectEntity?> GetProjectById(int id) => await _context.Projects
-        .FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == false);
+        .FirstOrDefaultAsync(p => p.Id == id);
 
 
     public async Task<List<ProjectEntity>> GetProjects() => await _context.Projects
-        .Where(p => p.IsDeleted == false)
         .ToListAsync();
 
     public async Task<List<TaskEntity>> GetTasksByProjectId(int id)=> await _context.Tasks
         .Include(t => t.Project)
-        .Include(t => t.CustomFilds.Where(t => t.IsDeleted == false))
-        .Where(t => t.Project.Id == id && t.IsDeleted == false).ToListAsync();
+        .Include(t => t.CustomFilds)
+        .Where(t => t.Project.Id == id ).ToListAsync();
 
     public async Task UpdateProject(ProjectEntity project)
     {
@@ -42,7 +41,7 @@ public class ProjectRepository : IProjectRepository
     public async Task DeleteProject(int id)
     {
         var project = await _context.Projects.FirstOrDefaultAsync(p => p.Id == id);
-        project!.IsDeleted = true;
+        _context.Projects.Remove(project);
         await _context.SaveChangesAsync();
     }
 }

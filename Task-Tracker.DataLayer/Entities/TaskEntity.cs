@@ -9,8 +9,7 @@ public class TaskEntity
     public CurrentStatusTask CurrentStatus { get; set; }
     public string Discription { get; set; }
     public int Priority { get; set; }
-    public bool IsDeleted { get; set; }
     public  ProjectEntity Project { get; set; }
-    public virtual ICollection<CustomFildEntity> CustomFilds { get; set; }
+    public virtual List <CustomFildEntity> CustomFilds { get; set; }
 }
 

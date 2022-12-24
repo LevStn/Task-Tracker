@@ -26,7 +26,7 @@ public class ProjectController : ControllerBase
 
 
     [HttpPost]
-    [SwaggerOperation(Summary = "Write your summary here")]
+    [SwaggerOperation(Summary = "Create new project")]
     [ProducesResponseType(typeof(long), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<int>> AddProject([FromBody] ProjectCreateRequest project)
@@ -37,6 +37,7 @@ public class ProjectController : ControllerBase
 
     
     [HttpGet("{id}")]
+    [SwaggerOperation(Summary = "Get project by id")]
     [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ProjectEntity>> GetProjectById([FromRoute] int id)
@@ -45,6 +46,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet]
+    [SwaggerOperation(Summary = "Get all projects")]
     [ProducesResponseType(typeof(ProjectResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<List<ProjectResponse>>> GetProjects()
@@ -53,6 +55,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet("{id}/tasks")]
+    [SwaggerOperation(Summary = "Get all tasks in project")]
     [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<List<TaskResponse>>> GetTasksByProjectId([FromRoute] int id)
@@ -62,6 +65,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [SwaggerOperation(Summary = "Changing project")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdateProjectById([FromBody] ProjectUpdateRequest updateModel, [FromRoute] int id)
@@ -71,6 +75,7 @@ public class ProjectController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Delete project")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteProjectById([FromRoute] int id)
@@ -80,10 +85,12 @@ public class ProjectController : ControllerBase
     }
 
     [HttpGet("id/sorting")]
+    [SwaggerOperation(Summary = "Sorting projects by various parameters")]
     [ProducesResponseType(typeof(ProjectResponse), StatusCodes.Status200OK)]
-    public async Task<ActionResult<List<ProjectResponse>>> GetProjectsBySorting([FromRoute] TypeOFSorting typeOFSorting )
+    public async Task<ActionResult<List<ProjectResponse>>> GetProjectsBySorting([FromQuery] TypeOFSorting typeOFSorting)
     {
-        return Ok();
+        return Ok(_mapper.Map<List<ProjectResponse>>(await _projectService.SortingProjectByParameters(typeOFSorting)));
+
     }
 
 }

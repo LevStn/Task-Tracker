@@ -31,6 +31,6 @@ public class CustomFildService : ICustomFildService
     {
         var customFild = await _customFildRepository.GetCustomFildById(id);
         _checkerService.CheckIfCustomFildEmpty(customFild, id);
-        await _customFildRepository.DeleteCustomFild(id);
+        await _customFildRepository.DeleteCustomFild(customFild);
     }
 }

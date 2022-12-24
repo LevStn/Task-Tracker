@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task_Tracker.BusinessLayer"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task_Tracker.DataLayer", "Task-Tracker.DataLayer\Task_Tracker.DataLayer.csproj", "{FB103184-1016-4265-B015-7C66BB0E3B1E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Task_Tracker.DataLayer.Tests", "Task_Tracker.DataLayer.Tests\Task_Tracker.DataLayer.Tests.csproj", "{B027964F-5E82-43FA-A3E9-1508C6D140A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task_Tracker.BusinessLayer.Tests", "Task_Tracker.BusinessLayer.Tests\Task_Tracker.BusinessLayer.Tests.csproj", "{D0A6CE97-3FF4-4123-A4B0-B86436EDA3B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{FB103184-1016-4265-B015-7C66BB0E3B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB103184-1016-4265-B015-7C66BB0E3B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB103184-1016-4265-B015-7C66BB0E3B1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B027964F-5E82-43FA-A3E9-1508C6D140A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B027964F-5E82-43FA-A3E9-1508C6D140A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B027964F-5E82-43FA-A3E9-1508C6D140A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B027964F-5E82-43FA-A3E9-1508C6D140A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0A6CE97-3FF4-4123-A4B0-B86436EDA3B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A6CE97-3FF4-4123-A4B0-B86436EDA3B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A6CE97-3FF4-4123-A4B0-B86436EDA3B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A6CE97-3FF4-4123-A4B0-B86436EDA3B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

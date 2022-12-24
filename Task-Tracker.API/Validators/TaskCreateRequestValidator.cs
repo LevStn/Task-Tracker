@@ -8,12 +8,14 @@ public class TaskCreateRequestValidator : AbstractValidator<TaskCreateRequest>
 {
     public TaskCreateRequestValidator()
     {
-        RuleFor(p => p.Name)
+        RuleFor(t => t.Name)
             .NotEmpty().WithMessage(ApiErrorMessage.NameIsNotRequired);
-        RuleFor(p => p.Priority)
+        RuleFor(t => t.Priority)
             .InclusiveBetween(1, 10).WithMessage(ApiErrorMessage.PriorityRangeError); ;
-        RuleFor(p => p.ProjectId)
+        RuleFor(t => t.ProjectId)
             .GreaterThan(0).WithMessage(ApiErrorMessage.NumberLessOrEqualZero);
+        RuleFor(t => t.Discription)
+            .NotEmpty().WithMessage(ApiErrorMessage.DescriptionRequired);
     }
 }
 

@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
+using System.Text.RegularExpressions;
 using Task_Tracker.BusinessLayer.Checkers;
-using Task_Tracker.BusinessLayer.Exceptions;
 using Task_Tracker.BusinessLayer.Models;
 using Task_Tracker.DataLayer.Entities;
 using Task_Tracker.DataLayer.Enums;
 using Task_Tracker.DataLayer.Repositories;
-
 namespace Task_Tracker.BusinessLayer.Service;
 
 public class ProjectService : IProjectService
@@ -50,7 +49,8 @@ public class ProjectService : IProjectService
     {
         var project = await _projectRepository.GetProjectById(id);
         _checkerService.CheckIfProjectEmpty(project, id);
-        return _mapper.Map<List<TaskModel>>(project);
+        var tasks = await _projectRepository.GetTasksByProjectId(id);
+        return _mapper.Map<List<TaskModel>>(tasks);
     }
 
     public async Task UpdateProject(ProjectModel newModel, int id)
@@ -66,5 +66,34 @@ public class ProjectService : IProjectService
 
         await _projectRepository.UpdateProject(_mapper.Map<ProjectEntity>(project));
        
+    }
+
+    public async Task<List<ProjectModel>> SortingProjectByParameters(TypeOFSorting typeOFSorting)
+    {
+        var descendingSort = "Descending";
+        var ascendingSort = "Ascending";
+        var sortProject = new List<ProjectModel>();
+        string[] split = Regex.Split(typeOFSorting.ToString(), @"(?<!^)(?=[A-Z])");
+
+        var project = _mapper.Map<List<ProjectModel>>(await _projectRepository.GetProjects());
+
+        if(split.Length == 3)
+        {
+            split[1] += split[2];
+        }
+
+        var property = project[0].GetType().GetProperty($"{split[1]}");   
+
+        if (split[0] == ascendingSort)
+        {
+            sortProject = project.OrderBy(x => property.GetValue(x, null)).ToList();
+
+        }
+        if (split[0] == descendingSort)
+        {
+            sortProject = project.OrderByDescending(x => property.GetValue(x, null)).ToList();
+        }
+
+        return sortProject;
     }
 }

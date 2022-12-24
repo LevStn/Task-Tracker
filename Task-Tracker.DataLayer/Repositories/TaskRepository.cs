@@ -22,9 +22,10 @@ public class TaskRepository : ITaskRepository
     }
 
     public async Task<TaskEntity?> GetTaskById(long id) => await _context.Tasks
-        .Include(t => t.CustomFilds.Where(t => t.IsDeleted == false))
+        .Include(t => t.CustomFilds)
         .Include(t => t.Project)
-        .FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == false);
+        .FirstOrDefaultAsync(p => p.Id == id);
+
 
     public async Task UpdateTask(TaskEntity newModel)
     {
@@ -35,7 +36,7 @@ public class TaskRepository : ITaskRepository
     public async Task DeleteTask(long id) 
     {
         var task = await _context.Tasks.FirstOrDefaultAsync(p => p.Id == id);
-        task!.IsDeleted = true;
+        _context.Tasks.Remove(task);
         await _context.SaveChangesAsync();
     }
 }

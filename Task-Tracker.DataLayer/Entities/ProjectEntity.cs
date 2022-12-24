@@ -10,6 +10,5 @@ public class ProjectEntity
     public DateTime CompletionDate { get; set; }
     public CurrentStatusProject CurrentStatus { get; set; }
     public int Priority { get; set; }
-    public bool IsDeleted { get; set; }
-    public virtual ICollection<TaskEntity> Task { get; set; }
+    public virtual List <TaskEntity> Task { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using Task_Tracker.API.Extensions;
 using Task_Tracker.API.Models.Requests;
 using Task_Tracker.API.Models.Responses;
@@ -25,6 +26,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpPost]
+    [SwaggerOperation(Summary = "Create new task")]
     [ProducesResponseType(typeof(long), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(void), StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<long>> AddTask([FromBody] TaskCreateRequest createRequest)
@@ -34,6 +36,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [SwaggerOperation(Summary = "Get task by id")]
     [ProducesResponseType(typeof(TaskResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<TaskResponse>> GetTaskById([FromRoute] long id)
@@ -42,6 +45,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [SwaggerOperation(Summary = "Update task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> UpdateTaskById([FromBody] TaskUpdateRequest updateRequest, [FromRoute] int id)
     {
@@ -50,6 +54,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [SwaggerOperation(Summary = "Delete task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> DeleteTaskById([FromRoute] long id)
     {
@@ -58,6 +63,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpPost("id/custom-filds")]
+    [SwaggerOperation(Summary = "Add custom fild in task")]
     [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(void), StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<int>> AddCustomFild([FromBody] CustomFildRequest customFild)
@@ -67,6 +73,7 @@ public class TaskController : ControllerBase
     }
 
     [HttpDelete("{id}/custom-filds")]
+    [SwaggerOperation(Summary = "Delete custom fild by id")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(void),StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteCustomFild([FromRoute] int id)

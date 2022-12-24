@@ -12,7 +12,7 @@ public class ProjectCreateRequestValidator : AbstractValidator<ProjectCreateRequ
         RuleFor(p => p.Name)
             .NotEmpty().WithMessage(ApiErrorMessage.NameIsNotRequired);
         RuleFor(p => p.StartDate)
-            .LessThan(DateTime.Now).WithMessage(ApiErrorMessage.StartDateLessCurrent);
+            .GreaterThan(DateTime.Now).WithMessage(ApiErrorMessage.StartDateLessCurrent);
         RuleFor(p => p.CompletionDate)
             .NotEmpty();
         RuleFor(p => p.Priority)

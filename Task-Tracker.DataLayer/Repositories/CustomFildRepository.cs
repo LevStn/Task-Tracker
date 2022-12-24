@@ -21,14 +21,13 @@ namespace Task_Tracker.DataLayer.Repositories
             return customFild.Id;
         }
 
-        public async Task DeleteCustomFild(int id)
-        {
-            var task = await _context.CustomFilds.FirstOrDefaultAsync(p => p.Id == id);
-            task!.IsDeleted = true;
+        public async Task DeleteCustomFild(CustomFildEntity customFild)
+        {            
+            _context.CustomFilds.Remove(customFild);
             await _context.SaveChangesAsync();
         }
 
         public async Task<CustomFildEntity?> GetCustomFildById(int id) => await _context.CustomFilds
-            .FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == false);
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 }

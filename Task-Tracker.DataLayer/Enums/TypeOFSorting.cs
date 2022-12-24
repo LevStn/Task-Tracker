@@ -2,8 +2,10 @@
 
 public enum TypeOFSorting
 {
-    AscendingDdate,
-    DescendingDdate,
+    AscendingStartDate,
+    DescendingStartDate,
+    AscendingCompletionDate,
+    DescendingCompletionDate,
     AscendingPriority,
     DescendingPriority,
 }

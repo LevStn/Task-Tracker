@@ -14,5 +14,7 @@ public class TaskUpdateRequestValidator : AbstractValidator<TaskUpdateRequest>
             .InclusiveBetween(1, 10).WithMessage(ApiErrorMessage.PriorityRangeError);
         RuleFor(t => t.CurrentStatus)
             .IsInEnum().WithMessage(ApiErrorMessage.CurrentStatusRangeError);
+        RuleFor(t => t.Discription)
+            .NotEmpty().WithMessage(ApiErrorMessage.DescriptionRequired);
     }
 }

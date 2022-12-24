@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Task_Tracker.BusinessLayer.Checkers;
-using Task_Tracker.BusinessLayer.Exceptions;
 using Task_Tracker.BusinessLayer.Models;
 using Task_Tracker.DataLayer.Entities;
 using Task_Tracker.DataLayer.Enums;
