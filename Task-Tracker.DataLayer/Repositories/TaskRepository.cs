@@ -26,7 +26,6 @@ public class TaskRepository : ITaskRepository
         .Include(t => t.Project)
         .FirstOrDefaultAsync(p => p.Id == id);
 
-
     public async Task UpdateTask(TaskEntity newModel)
     {
         _context.Tasks.Update(newModel);
