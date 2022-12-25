@@ -17,9 +17,9 @@ public class ProjectRequestValidator : AbstractValidator<ProjectRequest>
         RuleFor(p => p.Priority)
             .InclusiveBetween(1, 10).WithMessage(ApiErrorMessage.PriorityRangeError);
         RuleFor(p=> new {p.StartDate, p.CompletionDate})
-            .Must(x=> CustomValidators.ValidStartDateMoreEnd(x.StartDate,x.CompletionDate)).WithMessage(ApiErrorMessage.StartDateCantBeMoreEndDate);
+            .Must(x=> CustomValidators.ValidationStartDateMoreEnd(x.StartDate,x.CompletionDate)).WithMessage(ApiErrorMessage.StartDateCantBeMoreEndDate);
         RuleFor(p => new { p.StartDate, p.CompletionDate })
-           .Must(x => CustomValidators.ValidEndDateLessStart(x.StartDate, x.CompletionDate)).WithMessage(ApiErrorMessage.CompletionDateLessStart);
+           .Must(x => CustomValidators.ValidationEndDateLessStart(x.StartDate, x.CompletionDate)).WithMessage(ApiErrorMessage.CompletionDateLessStart);
 
     }
 

@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IValidator<CustomFildRequest>, CustomFildRequestValidator>();
         services.AddScoped<IValidator<ProjectRequest>, ProjectRequestValidator>();
         services.AddScoped<IValidator<TaskCreatingRequest>, TaskRequestValidator>();
+        services.AddScoped<IValidator<TaskUpdatingRequest>, TaskUpdatingValidator>();
     }
 
     public static void AddSwaggerGen(this IServiceCollection services)

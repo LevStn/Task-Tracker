@@ -2,7 +2,7 @@
 
 public static class CustomValidators
 {
-    public static bool ValidStartDateMoreEnd(DateTime startDate, DateTime endDate)
+    public static bool ValidationStartDateMoreEnd(DateTime startDate, DateTime endDate)
     {
         if (startDate > endDate)
         {
@@ -11,12 +11,18 @@ public static class CustomValidators
         return true;
     }
 
-    public static bool ValidEndDateLessStart(DateTime startDate, DateTime endDate)
+    public static bool ValidationEndDateLessStart(DateTime startDate, DateTime endDate)
     {
         if (startDate <= endDate)
         {
             return true;
         }
         return false;
+    }
+
+    public static bool ValidationDate(string value)
+    {
+        DateTime date;
+        return DateTime.TryParse(value, out date);
     }
 }
