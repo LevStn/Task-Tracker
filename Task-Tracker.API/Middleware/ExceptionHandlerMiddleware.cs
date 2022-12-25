@@ -23,18 +23,6 @@ public class ExceptionHandlerMiddleware
             {
                 await HandleExceptionAsync(context, HttpStatusCode.NotFound, exception.Message);
             }
-            //catch (UniquenessException exception)
-            //{
-            //    await HandleExceptionAsync(context, HttpStatusCode.UnprocessableEntity, exception.Message);
-            //}
-            //catch (DataException exception)
-            //{
-            //    await HandleExceptionAsync(context, HttpStatusCode.UnprocessableEntity, exception.Message);
-            //}
-            //catch (AccessException exception)
-            //{
-            //    await HandleExceptionAsync(context, HttpStatusCode.Forbidden, exception.Message);
-            //}
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, HttpStatusCode.InternalServerError, ex.Message);

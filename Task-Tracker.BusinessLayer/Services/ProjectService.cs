@@ -66,7 +66,6 @@ public class ProjectService : IProjectService
         project.CurrentStatus = currentStatus;
 
         await _projectRepository.UpdateProject(_mapper.Map<ProjectEntity>(project));
-       
     }
 
     public async Task<List<ProjectModel>> SortingProjectByParameters(TypeOFSorting typeOFSorting)

@@ -8,7 +8,6 @@ public class CustomFildRequestValidator : AbstractValidator<CustomFildRequest>
 {
     public CustomFildRequestValidator()
     {
-
         RuleFor(t => t.TaskId)
             .GreaterThan(0).WithMessage(ApiErrorMessage.NumberLessOrEqualZero);
         RuleFor(t => t.Name)

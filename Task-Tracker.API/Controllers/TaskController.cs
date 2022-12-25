@@ -48,7 +48,8 @@ public class TaskController : ControllerBase
     [HttpPut("{id}")]
     [SwaggerOperation(Summary = "Update task")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<ActionResult> UpdateTaskById([FromBody] TaskUpdatingRequest updateRequest, [FromRoute] int id, [FromQuery] CurrentStatusTask currentStatus)
+    public async Task<ActionResult> UpdateTaskById([FromBody] TaskUpdatingRequest updateRequest, [FromRoute] int id,
+                                                                        [FromQuery] CurrentStatusTask currentStatus)
     {
         await _taskService.UpdateTask(_mapper.Map<TaskModel>(updateRequest), id, currentStatus);
         return NoContent();

@@ -68,7 +68,8 @@ public class ProjectController : ControllerBase
     [SwaggerOperation(Summary = "Changing project")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> UpdateProjectById([FromBody] ProjectRequest updateModel, [FromRoute] int id, [FromQuery] CurrentStatusProject currentStatus)
+    public async Task<ActionResult> UpdateProjectById([FromBody] ProjectRequest updateModel, [FromRoute] int id,
+                                                                  [FromQuery] CurrentStatusProject currentStatus)
     {
         await _projectService.UpdateProject(_mapper.Map<ProjectModel>(updateModel), id, currentStatus);
         return NoContent();

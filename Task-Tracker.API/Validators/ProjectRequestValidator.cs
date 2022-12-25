@@ -8,7 +8,6 @@ public class ProjectRequestValidator : AbstractValidator<ProjectRequest>
 {
     public ProjectRequestValidator()
     {
-
         RuleFor(p => p.Name)
             .NotEmpty().WithMessage(ApiErrorMessage.NameIsNotRequired);
         RuleFor(p => p.StartDate)
@@ -22,9 +21,6 @@ public class ProjectRequestValidator : AbstractValidator<ProjectRequest>
         RuleFor(p => new { p.StartDate, p.CompletionDate })
            .Must(x => CustomValidators.ValidEndDateLessStart(x.StartDate, x.CompletionDate)).WithMessage(ApiErrorMessage.CompletionDateLessStart);
 
-
-
     }
 
-    
 }

@@ -9,20 +9,21 @@ using Task_Tracker.DataLayer;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers()
-    .AddJsonOptions(options =>
+.AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+})
+.ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
     {
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-    })
-    .ConfigureApiBehaviorOptions(options =>
-    {
-        options.InvalidModelStateResponseFactory = context =>
-        {
-            var result = new BadRequestObjectResult(context.ModelState);
-            result.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            return result;
-        };
+        var result = new BadRequestObjectResult(context.ModelState);
+        result.StatusCode = StatusCodes.Status422UnprocessableEntity;
+        return result;
+    };
 
-    });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAutoMapper(typeof(MapperApi), typeof(MapperConfigBusinessLayer));
