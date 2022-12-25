@@ -81,7 +81,7 @@ public class CustomFildRepositoryTests
     }
 
     [Test]
-    public async Task DeleteCustomFild_WhenCorrecId_ThenDeleted()
+    public async Task DeleteCustomFild_WhenCorretcId_ThenDeleted()
     {
         var projectId = await _projectRepository.AddProject(new ProjectEntity()
         {
@@ -123,7 +123,7 @@ public class CustomFildRepositoryTests
     }
 
     [Test]
-    public async Task GetCustomFildById_WhenCorrecId_ThenReturnCustomFild()
+    public async Task GetCustomFildById_WhenCorrectId_ThenReturnCustomFild()
     {
         var projectId = await _projectRepository.AddProject(new ProjectEntity()
         {

@@ -1,13 +1,17 @@
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Runtime;
+using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using Task_Tracker.API.Extensions;
+using Task_Tracker.API.Infrastructure;
 using Task_Tracker.API.MapperConfiguration;
 using Task_Tracker.BusinessLayer.MapperConfig;
 using Task_Tracker.DataLayer;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -32,9 +36,13 @@ builder.Services.AddRepositories();
 builder.Services.AddSwaggerGen();
 builder.Services.AddFluentValidation();
 
+
+var connString = new DbConfig();
+builder.Configuration.Bind(connString);
+
 builder.Services.AddDbContext<TaskTrackerContext>(t =>
 {
-    t.UseSqlServer(@"Server=.;Database=Task-Tracking;Trusted_Connection=True;TrustServerCertificate=true");
+    t.UseSqlServer(connString.TASK_TRACKER_CONNECTION_STRING);
 });
 var app = builder.Build();
 app.UseCustomExceptionHandler();

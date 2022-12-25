@@ -12,8 +12,8 @@ using Task_Tracker.DataLayer;
 namespace TaskTracker.DataLayer.Migrations
 {
     [DbContext(typeof(TaskTrackerContext))]
-    [Migration("20221224163013_test")]
-    partial class test
+    [Migration("20221225000755_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -43,5 +43,9 @@ public class CustomFildServiceTestsPositive
         var actual = await _sut.AddCustomFild(customFild);
 
         Assert.That(actual, Is.EqualTo(customFild.Id));
+        _customFildRepositoryMock.Verify(p => p.AddCustomFild(It.Is<CustomFildEntity>(p =>
+          p.Id == customFild.Id &&
+          p.Name == customFild.Name &&
+          p.Task.Id == customFild.TaskId)));
     }
 }

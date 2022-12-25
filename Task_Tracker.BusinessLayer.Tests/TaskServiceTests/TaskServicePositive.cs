@@ -54,18 +54,18 @@ public class TaskServicePositive
 
         Assert.That(actual, Is.EqualTo(task.Id));
         _taskRepositoryMock.Verify(p => p.AddTask(It.Is<TaskEntity>(p =>
-        p.Id == task.Id &&
-        p.Name == task.Name &&
-        p.Priority == task.Priority &&
-        p.Discription == task.Discription &&
-        p.CurrentStatus == task.CurrentStatus &&
-        p.Priority == task.Priority)));
+            p.Id == task.Id &&
+            p.Name == task.Name &&
+            p.Priority == task.Priority &&
+            p.Discription == task.Discription &&
+            p.CurrentStatus == task.CurrentStatus &&
+            p.Priority == task.Priority)));
     }
 
     [Test]
     public async Task GetTaskById_ValidRequestPassed_TaskReturned()
     {
-        var taskModel = new TaskEntity()
+        var task = new TaskEntity()
         {
             Id = 5,
             Name = "First",
@@ -74,17 +74,18 @@ public class TaskServicePositive
             CurrentStatus = CurrentStatusTask.ToDo
         };
 
-        _taskRepositoryMock.Setup(p => p.GetTaskById(taskModel.Id))
-            .ReturnsAsync(taskModel);
+        _taskRepositoryMock.Setup(p => p.GetTaskById(task.Id))
+            .ReturnsAsync(task);
 
-        var actual = await _sut.GetTaskById(taskModel.Id);
+        var actual = await _sut.GetTaskById(task.Id);
 
-        Assert.That(actual.Id, Is.EqualTo(taskModel.Id));
-        Assert.That(actual.Name, Is.EqualTo(taskModel.Name));
-        Assert.That(actual.Priority, Is.EqualTo(taskModel.Priority));
-        Assert.That(actual.Discription, Is.EqualTo(taskModel.Discription));
-        Assert.That(actual.CurrentStatus, Is.EqualTo(taskModel.CurrentStatus));
-        Assert.That(actual.Priority, Is.EqualTo(taskModel.Priority));
+        Assert.That(actual.Id, Is.EqualTo(task.Id));
+        Assert.That(actual.Name, Is.EqualTo(task.Name));
+        Assert.That(actual.Priority, Is.EqualTo(task.Priority));
+        Assert.That(actual.Discription, Is.EqualTo(task.Discription));
+        Assert.That(actual.CurrentStatus, Is.EqualTo(task.CurrentStatus));
+        Assert.That(actual.Priority, Is.EqualTo(task.Priority));
+        _taskRepositoryMock.Verify(p => p.GetTaskById(task.Id));
     }
 
     [Test]
@@ -119,5 +120,11 @@ public class TaskServicePositive
         Assert.That(actual.Priority, Is.EqualTo(newTaskProperties.Priority));
         Assert.That(actual.Discription, Is.EqualTo(newTaskProperties.Discription));
         Assert.That(actual.CurrentStatus, Is.EqualTo(CurrentStatusTask.InProgress));
+        _taskRepositoryMock.Verify(p => p.UpdateTask(It.Is<TaskEntity>(p =>
+           p.Name == newTaskProperties.Name &&
+           p.Priority == newTaskProperties.Priority &&
+           p.Discription == newTaskProperties.Discription &&
+           p.CurrentStatus == CurrentStatusTask.InProgress &&
+           p.Priority == newTaskProperties.Priority)));
     }
 }

@@ -59,12 +59,16 @@ public class TaskRepositoryTests
 
         await _context.SaveChangesAsync();
         var actualId = await _sut.AddTask(task);
+        var actualTask =await _sut.GetTaskById(actualId);
 
         Assert.That(actualId, Is.EqualTo(task.Id));
+        Assert.That(task.Name, Is.EqualTo(task.Name));
+        Assert.That(task.Discription, Is.EqualTo(task.Discription));
+        Assert.That(projectId, Is.EqualTo(task.Project.Id));
     }
 
     [Test]
-    public async Task GetTaskById_WhenCorrecId_ThenTaskReceived()
+    public async Task GetTaskById_WhenCorrectId_ThenTaskReceived()
     {
 
         var projectId = await _projectRepository.AddProject(new ProjectEntity()
@@ -99,7 +103,7 @@ public class TaskRepositoryTests
     }
 
     [Test]
-    public async Task DeleteTask_WhenCorrecId_ThenDeleted()
+    public async Task DeleteTask_WhenCorrectId_ThenDeleted()
     {
         var projectId = await _projectRepository.AddProject(new ProjectEntity()
         {

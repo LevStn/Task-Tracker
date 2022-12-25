@@ -56,7 +56,7 @@ public class ProjectRepositoryTests
     }
 
     [Test]
-    public async Task GetProjectById_WhenCorrecId_ThenReturnProject()
+    public async Task GetProjectById_WhenCorrectId_ThenReturnProject()
     {
         var projectEntity = new ProjectEntity()
         {

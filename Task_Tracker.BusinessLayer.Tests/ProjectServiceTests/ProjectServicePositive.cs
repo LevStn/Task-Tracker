@@ -57,7 +57,7 @@ public class ProjectServicePositive
     [Test]
     public async Task GetProjectById_ValidRequestPassed_ProjectReturned()
     {
-        var projectModel = new ProjectEntity()
+        var project = new ProjectEntity()
         {
             Id = 5,
             Name = "First",
@@ -67,17 +67,18 @@ public class ProjectServicePositive
             CurrentStatus = CurrentStatusProject.NotStarted
         };
 
-        _projectRepositoryMock.Setup(p => p.GetProjectById(projectModel.Id))
-            .ReturnsAsync(projectModel);
+        _projectRepositoryMock.Setup(p => p.GetProjectById(project.Id))
+            .ReturnsAsync(project);
 
-        var actual = await _sut.GetProjectById(projectModel.Id);
+        var actual = await _sut.GetProjectById(project.Id);
 
-        Assert.That(actual.Id, Is.EqualTo(projectModel.Id));
-        Assert.That(actual.Name, Is.EqualTo(projectModel.Name));
-        Assert.That(actual.Priority, Is.EqualTo(projectModel.Priority));
-        Assert.That(actual.StartDate, Is.EqualTo(projectModel.StartDate));
-        Assert.That(actual.CompletionDate, Is.EqualTo(projectModel.CompletionDate));
-        Assert.That(actual.CurrentStatus, Is.EqualTo(projectModel.CurrentStatus));
+        Assert.That(actual.Id, Is.EqualTo(project.Id));
+        Assert.That(actual.Name, Is.EqualTo(project.Name));
+        Assert.That(actual.Priority, Is.EqualTo(project.Priority));
+        Assert.That(actual.StartDate, Is.EqualTo(project.StartDate));
+        Assert.That(actual.CompletionDate, Is.EqualTo(project.CompletionDate));
+        Assert.That(actual.CurrentStatus, Is.EqualTo(project.CurrentStatus));
+        _projectRepositoryMock.Verify(p => p.GetProjectById(project.Id));
     }
 
     [Test]
@@ -121,12 +122,16 @@ public class ProjectServicePositive
         var actual = await _sut.GetProjects();
 
         Assert.That(actual.Count, Is.EqualTo(listProject.Count));
-        
+        Assert.That(listProject[0].Id, Is.EqualTo(5));
+        Assert.That(listProject[1].Id, Is.EqualTo(6));
+        Assert.That(listProject[2].Id, Is.EqualTo(7));
+        _projectRepositoryMock.Verify(p => p.GetProjects());
     }
 
     [Test]
     public async Task GetTasksByProjectId_ValidQuery_TasksReturned()
     {
+        var expectedType = new List<TaskModel>();
         var project = new ProjectEntity()
         {
             Id = 9,
@@ -155,7 +160,13 @@ public class ProjectServicePositive
 
         var actual = await _sut.GetTasksByProjectId(project.Id);
 
+
         Assert.That(actual.Count, Is.EqualTo(project.Task.Count));
+        Assert.That(actual.GetType(), Is.EqualTo(expectedType.GetType()));
+        Assert.That(actual.Count, Is.EqualTo(project.Task.Count));
+        Assert.That(project.Task[0].Id, Is.EqualTo(actual[0].Id));
+        Assert.That(project.Task[1].Id, Is.EqualTo(actual[1].Id));
+        _projectRepositoryMock.Verify(p => p.GetTasksByProjectId(project.Id));
     }
 
     [Test]
@@ -193,8 +204,14 @@ public class ProjectServicePositive
         Assert.That(actual.StartDate, Is.EqualTo(newProjectProperties.StartDate));
         Assert.That(actual.CompletionDate, Is.EqualTo(newProjectProperties.CompletionDate));
         Assert.That(actual.CurrentStatus, Is.EqualTo(newProjectProperties.CurrentStatus));
+        _projectRepositoryMock.Verify(p => p.UpdateProject(It.Is<ProjectEntity>(p =>
+           p.Id == project.Id &&
+           p.Name == project.Name &&
+           p.Priority == project.Priority &&
+           p.StartDate == project.StartDate &&
+           p.CompletionDate == project.CompletionDate &&
+           p.CurrentStatus == project.CurrentStatus)));
     }
-
 
     [TestCase(TypeOFSorting.AscendingStartDate)]
     [TestCase(TypeOFSorting.DescendingStartDate)]
@@ -270,25 +287,23 @@ public class ProjectServicePositive
         switch (typeOFSorting)
         {
             case TypeOFSorting.AscendingStartDate:
-                Assert.AreEqual(actualSortId, expectedAscendingStartDate);
+                Assert.That(expectedAscendingStartDate, Is.EqualTo(actualSortId));
                 break;
             case TypeOFSorting.DescendingStartDate:
-                Assert.AreEqual(actualSortId, expectedDescendingStartDate);
+                Assert.That(expectedDescendingStartDate, Is.EqualTo(actualSortId));
                 break;
             case TypeOFSorting.AscendingCompletionDate:
-                Assert.AreEqual(actualSortId, expectedAscendingCompletionDate);
+                Assert.That(expectedAscendingCompletionDate, Is.EqualTo(actualSortId));
                 break;
             case TypeOFSorting.DescendingCompletionDate:
-                Assert.AreEqual(actualSortId, expectedDescendingCompletionDate);
+                Assert.That(expectedDescendingCompletionDate, Is.EqualTo(actualSortId));
                 break;
             case TypeOFSorting.AscendingPriority:
-                Assert.AreEqual(actualSortId, expectedAscendingPriority);
+                Assert.That(expectedAscendingPriority, Is.EqualTo(actualSortId));
                 break;
             case TypeOFSorting.DescendingPriority:
-                Assert.AreEqual(actualSortId, expectedDescendingPriority);
+                Assert.That(expectedDescendingPriority, Is.EqualTo(actualSortId));
                 break;
         }
-        
-      
     }
 }
