@@ -14,8 +14,6 @@ public class TaskRepositoryTests
     private TaskTrackerContext _context;
     private CustomFildRepository _customFildRepository;
     private ProjectRepository _projectRepository;
-
-
     public TaskRepositoryTests()
     {
         _dbContextOptions = new DbContextOptionsBuilder<TaskTrackerContext>()

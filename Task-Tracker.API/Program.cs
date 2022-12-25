@@ -1,12 +1,7 @@
-using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Runtime;
-using System.Runtime.InteropServices;
 using System.Text.Json.Serialization;
 using Task_Tracker.API.Extensions;
-using Task_Tracker.API.Infrastructure;
 using Task_Tracker.API.MapperConfiguration;
 using Task_Tracker.BusinessLayer.MapperConfig;
 using Task_Tracker.DataLayer;
@@ -36,28 +31,19 @@ builder.Services.AddRepositories();
 builder.Services.AddSwaggerGen();
 builder.Services.AddFluentValidation();
 
-
-var connString = new DbConfig();
-builder.Configuration.Bind(connString);
-
 builder.Services.AddDbContext<TaskTrackerContext>(t =>
 {
-    t.UseSqlServer(connString.TASK_TRACKER_CONNECTION_STRING);
+    t.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
 });
+
 var app = builder.Build();
 app.UseCustomExceptionHandler();
-
-
 if (app.Environment.IsDevelopment())
 {   
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

@@ -10,8 +10,9 @@ public class TaskTrackerContext : DbContext
     public DbSet<CustomFildEntity> CustomFilds { get; set; }
 
     public TaskTrackerContext(DbContextOptions<TaskTrackerContext> option)
-       : base(option)
+    : base(option)
     {
+       
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

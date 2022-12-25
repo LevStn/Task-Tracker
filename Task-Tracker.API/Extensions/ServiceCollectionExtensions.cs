@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Task_Tracker.API.FluentValidators;
@@ -8,8 +10,9 @@ using Task_Tracker.API.Validators;
 using Task_Tracker.BusinessLayer.Checkers;
 using Task_Tracker.BusinessLayer.Service;
 using Task_Tracker.BusinessLayer.Services;
+using Task_Tracker.DataLayer;
 using Task_Tracker.DataLayer.Repositories;
-
+using Microsoft.Extensions.Configuration;
 namespace Task_Tracker.API.Extensions;
 
 public static class ServiceCollectionExtensions
@@ -56,4 +59,18 @@ public static class ServiceCollectionExtensions
             
         });
     }
+
+    //public static void ConfigureServices(this IServiceCollection services)
+    //{
+    //    builder.Services
+
+    //    var connString = new DbConfig();
+    //    services.AddDbContext<TaskTrackerContext>(t =>
+    //    {
+
+    //        builder.Configuration.Bind(DbConfig.TASK_TRACKER_CONNECTION_STRING);
+    //        t.UseSqlServer(DbConfig.TASK_TRACKER_CONNECTION_STRING);
+    //        services.AddDbContext<TaskTrackerContext>(options =>
+    //        options.UseSqlServer(Configuration.GetConnectionString("BloggingDatabase")));
+    //}
 }
